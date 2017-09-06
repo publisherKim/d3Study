@@ -5,25 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>업데이트후 라벨도 변경</title>
+    <title>서열척도와 대역폭</title>
     <script src="/d3/d3.v3.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/pratice.css">
+    <link rel="stylesheet" type="text/css" href="/css/practice.css">
 </head>
 
 <body>
-    <button>원그래프로 바꾸기 단 한번</button>
     <script type="text/javascript">
 			const w = 600;
 			const h = 250;
 			const barPadding = 1;
 			
-			let dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+			const dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
 			
 			const svg = d3.select("body")
         .append("svg")
         .attr("width", w)
         .attr("height", h);
 
+      /* 
+        ordinal 서열척도 나름의 순선가 있는 카테고리를 의미
+        대역폭 구하는 공식
+        (w - 0) / xScale.domain().length
+        (600 - 0) / 20
+        roundBands() 대역간 간격 즉 그래프 사이의 간격
+      */
       const xScale = d3.scale.ordinal()
         .domain(d3.range(dataset.length))
         .rangeRoundBands([0, w], 0.05);
@@ -32,7 +38,6 @@
         .domain([0, d3.max(dataset)])
         .range([0, h]);
 
-      // 막대 바 생성하기
 			svg.selectAll("rect")
         .data(dataset)
         .enter()
@@ -50,8 +55,7 @@
         .attr("fill", function(d) {
           return "rgb(0, 0, " + (d * 10) + ")";
         });
-      
-      // 라벨 생성하기
+
 			svg.selectAll("text")
         .data(dataset)
         .enter()
@@ -68,41 +72,7 @@
         })
         .attr("font-family", "sans-serif")
         .attr("font-size", "11px")
-        .attr("fill", "white");
-      
-      d3.select("button")
-        .on("click", function(){
-          dataset = [11, 12, 15, 20, 18, 17, 16, 18, 23, 25, 5, 10, 13, 19, 21, 25, 22, 18, 15, 13];
-
-          svg.selectAll("rect")
-            .data(dataset)
-            .attr("y", function(d){
-              return h - yScale(d);
-            })
-            .attr("height", function(d){
-              return yScale(d);
-            })
-            .attr("fill", function(d){
-              // d는 데이터의 수치 이므로 색상도 변화함, 데이터의 미묘한 차이를 색으로 표현하려고 하는 의도 
-              return "rgb(0, 0, " + (d * 10) + ")";
-            });
-          
-          svg.selectAll("text")
-            .data(dataset)
-            .text(function(d){
-              return d;
-            })
-            .attr("x", function(d, i){
-              // rangeBand는 가로의 위치를 결정한다.
-              return xScale(i) + xScale.rangeBand() / 2;              
-            })
-            .attr("y", function(d){
-              // 라벨의 세로 위치를 결정한다. 
-              // 비율로 결정되 d값을 가지고 높이를 배정한다.
-              return h - yScale(d) + 14;
-            }) 
-        });
-      
+        .attr("fill", "white");        
     </script>
 </body>
 

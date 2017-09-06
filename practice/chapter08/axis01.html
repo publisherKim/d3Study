@@ -7,25 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>축</title>
     <script src="/d3/d3.v3.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/pratice.css">
+    <link rel="stylesheet" type="text/css" href="/css/practice.css">
 </head>
 
 <body>
     <script type="text/javascript">
-      // 확장성 테스트 동적 데이터
 			var w = 500;
 			var h = 300;
       var padding = 30;
       
-			var dataset = [];
-      var numDataPoints = 50;
-      var xRange = Math.random() * 1000;
-      var yRange = Math.random() * 1000;
-      for(var i = 0; i < numDataPoints; i++){
-        var newNumber1 = Math.floor(Math.random() * xRange);
-        var newNumber2 = Math.floor(Math.random() * yRange);
-        dataset.push([newNumber1, newNumber2]);
-      }
+			var dataset = [
+        [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
+        [410, 12], [475, 44], [25, 67], [85, 21], [220, 88],
+        [600, 150]
+      ];
 
 			var xScale = d3.scale.linear()
         .domain([0, d3.max(dataset, function(d) {
@@ -98,13 +93,11 @@
         .attr("class", "axis")
         .attr("transform", "translate(0, "+ (h - padding) +")")
         .call(xAxis);
-
       // y축을 호출하면 y축이 화면에 표신된다.
       svg.append("g")
         .attr("class", "axis")
         .attr("transform", "translate("+ padding +", 0)")
         .call(yAxis)
-        
     </script>
 </body>
 

@@ -21,3 +21,9 @@ This is version **1.0**.  This release matches examples seen in the first editio
 This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
 
 http://creativecommons.org/licenses/by-nc-nd/3.0/
+
+### 화면에서 확인하기
+
+로컬 서버 실행 : python -m SimpleHTTPServer 8888
+해당 주소 : http://localhost:8888/practice/폴더명/파일명
+ex) http://localhost:8888/practice/chapter09/05_bar_chart.html
