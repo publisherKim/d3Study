@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="/d3/d3.v3.js"></script>
+</head>
+
+<body>
+    <script>
+        var dataset = [5, 10, 15, 20, 25];
+        d3.select('body').selectAll('div')
+            .data(dataset)
+            .enter()
+            .append('div')
+            .attr('class', 'bar')
+            .style('height', function(d) {
+                return d + 'px';
+            });
+    </script>
+</body>
+
+</html>

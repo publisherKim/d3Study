@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>d3 산포도</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="/d3/d3.v3.js"></script>
+</head>
+
+<body>
+    <script>
+        //Width and height
+        var w = 500;
+        var h = 100;
+
+        var dataset = [
+            [5, 20],
+            [480, 90],
+            [250, 50],
+            [100, 33],
+            [330, 95],
+            [410, 12],
+            [475, 44],
+            [25, 67],
+            [85, 21],
+            [220, 88]
+        ];
+
+        var svg = d3.select('body')
+            .append('svg')
+            .attr('width', w)
+            .attr('height', h);
+
+        svg.selectAll('circle')
+            .data(dataset)
+            .enter()
+            .append('circle')
+            .attr('cx', function(d) {
+                return d[0];
+            })
+            .attr('cy', function(d) {
+                return d[1];
+            })
+            .attr('r', function(d) {
+                return Math.sqrt(h - d[1]);
+            });
+        // 원의 넓이는 pai * r * r 인데 여기서 반지름을 구할때 높이에서 y좌표의 값을 빼었다 의아 하다.
+        // 제곱근을 씌운 이유는 좌표에서 거리 구하기 위함인데  x좌표 y좌표 두개만 있는데 왜 원의 크기를 위해서 반지름을 이렇게 상정하는지는 좀 의문이다.
+        // attr('r', callback) 은 반지름을 적용하는 함수 인데... 높이에서 y좌표를 뺀 거리로 지정했을까 ? 
+        // 높이에서 y가 커질수록 반지름이 작아지고 넓이도 작아진다 이게 무슨 의미여... 그냥 d3동적으로 크기 산정이 가능함을 설명하려고 쓴것 같다.
+    </script>
+</body>
+
+</html>

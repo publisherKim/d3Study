@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D3pageTemplete</title>
+    <script src="/d3/d3.v3.js"></script>
+</head>
+
+<body>
+    <script>
+        var dataset = [5, 10, 15, 20, 25, 30];
+
+        d3.select('body').selectAll('p')
+            .data(dataset)
+            .enter()
+            .append('p')
+            .text(function(d) {
+                return d;
+            });
+        console.log(d3.selectAll('p'));
+    </script>
+    <p> __proto__ 각각의 값이 들어가 있다.콜백함수의 파라미터 d라고 설정했을때 이값이 각각의 값으로 매칭됨을 알수 있다. </p>
+</body>
+
+</html>

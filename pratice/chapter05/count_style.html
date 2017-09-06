@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D3pageTemplete</title>
+    <script src="/d3/d3.v3.js"></script>
+</head>
+
+<body>
+    <script>
+        var dataset = [5, 10, 15, 20, 25, 30];
+
+        d3.select('body').selectAll('p')
+            .data(dataset)
+            .enter()
+            .append('p')
+            .text(function(d) {
+                return ('I can count up to ' + d);
+            })
+            .style('color', function(d) {
+                if (d > 15) {
+                    return 'red';
+                } else {
+                    return 'black'
+                }
+            });
+        console.log(d3.selectAll('p'));
+    </script>
+    <p>콜백의 로직을 작성하면 결과를 다르게 표현 할 수 있다.</p>
+</body>
+
+</html>

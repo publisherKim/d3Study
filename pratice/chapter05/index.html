@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D3pageTemplete</title>
+    <script src="/d3/d3.v3.js"></script>
+</head>
+
+<body>
+    <script>
+        d3.select('body').append('p').text('New paragraph!');
+        var dataset;
+        d3.csv('/data/food.csv', function(data) {
+            dataset = data;
+            console.log(dataset);
+        });
+        console.log('비동기 호출 콜백함수안의 호출에 의해서 사용해라, data블 불러들이는데 시간이 걸림 : ' + dataset);
+    </script>
+</body>
+
+</html>
