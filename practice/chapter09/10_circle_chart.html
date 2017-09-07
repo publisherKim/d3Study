@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>축 갱신하기</title>
+		<title>트랜지션 콤보</title>
 		<script type="text/javascript" src="../d3/d3.v3.js"></script>
 		<style type="text/css">
 			.axis path,
@@ -107,12 +107,22 @@
             .data(dataset)
             .transition()
             .duration(1000)
+            .each("start", function() {  // 트랜지션 시작시 실행
+              d3.select(this)
+                .attr("fill", "magenta")
+                .attr("r", 7)
+            })
             .attr("cx", function(d) {
               return xScale(d[0]);
             })
             .attr("cy", function(d) {
               return yScale(d[1]);
-            });
+            })
+            .transition()
+            .duration(1000)
+            .attr("fill", "black")
+            .attr("r", 2);
+
 
 					// update x, y축
 					svg.select(".x.axis")
