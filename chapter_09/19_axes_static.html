@@ -43,24 +43,24 @@
 
 			//Create scale functions
 			var xScale = d3.scale.linear()
-								 .domain([0, d3.max(dataset, function(d) { return d[0]; })])
-								 .range([padding, w - padding * 2]);
+        .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+        .range([padding, w - padding * 2]);
 
 			var yScale = d3.scale.linear()
-								 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
-								 .range([h - padding, padding]);
+        .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+        .range([h - padding, padding]);
 
 			//Define X axis
 			var xAxis = d3.svg.axis()
-							  .scale(xScale)
-							  .orient("bottom")
-							  .ticks(5);
+        .scale(xScale)
+        .orient("bottom")
+        .ticks(5);
 
 			//Define Y axis
 			var yAxis = d3.svg.axis()
-							  .scale(yScale)
-							  .orient("left")
-							  .ticks(5);
+        .scale(yScale)
+        .orient("left")
+        .ticks(5);
 
 			//Create SVG element
 			var svg = d3.select("body")

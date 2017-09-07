@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>축 갱신하기</title>
+		<script type="text/javascript" src="../d3/d3.v3.js"></script>
+		<style type="text/css">
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+			.axis text {
+				font-family: sans-serif;
+				font-size: 11px;
+			}
+		</style>
+	</head>
+	<body>
+	
+		<button>축을 만들고 데이터의 결과 뿌려주기</button>
+	
+		<script type="text/javascript">
+
+			//Width and height
+			const w = 500;
+			const h = 300;
+			var padding = 30;
+			
+			// 동적인 랜덤 데이터 셋
+			let dataset = []; // 데이터셋의 초기화
+			const numDataPoints = 50; // 더미데이터의 개수
+			const maxRange = Math.random() * 1000;  // 값의 최대값 범위
+			for (let i = 0; i < numDataPoints; i++) {					
+				const newNumber1 = Math.floor(Math.random() * maxRange);	
+				const newNumber2 = Math.floor(Math.random() * maxRange);	
+				dataset.push([newNumber1, newNumber2]);					
+			}
+
+			// 스케일 함수 만들기
+			const xScale = d3.scale.linear()
+        .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+        .range([padding, w - padding * 2]);
+
+			const yScale = d3.scale.linear()
+        .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+        .range([h - padding, padding]);
+
+			// x축 정의
+			const xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom")
+        .ticks(5);
+
+			// y축 정의
+			const yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left")
+        .ticks(5);
+      
+      // svg 생성
+			const svg = d3.select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+			// circles 생성
+			svg.selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) {
+          return xScale(d[0]);
+        })
+        .attr("cy", function(d) {
+          return yScale(d[1]);
+        })
+        .attr("r", 2);
+			
+			// x축 생성
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + (h - padding) + ")")
+				.call(xAxis);
+			
+			// y축 생성
+			svg.append("g")
+				.attr("class", "y axis")
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);
+			
+			d3.select("button")
+        .on("click", function() {
+          var numValues = dataset.length;						 	
+          var maxRange = Math.random() * 1000;
+          dataset = [];
+          for (var i = 0; i < numValues; i++) {
+            var newNumber1 = Math.floor(Math.random() * maxRange);
+            var newNumber2 = Math.floor(Math.random() * maxRange);
+            dataset.push([newNumber1, newNumber2]);
+          }
+					
+					xScale.domain([0, d3.max(dataset, function(d) { return d[0]; })]);
+					yScale.domain([0, d3.max(dataset, function(d) { return d[1]; })]);
+
+					svg.selectAll("circle")
+            .data(dataset)
+            .transition()
+            .duration(1000)
+            .attr("cx", function(d) {
+              return xScale(d[0]);
+            })
+            .attr("cy", function(d) {
+              return yScale(d[1]);
+            });
+
+					// update x, y축
+					svg.select(".x.axis")
+            .transition()
+            .duration(1000)
+						.call(xAxis);
+					
+					svg.select(".y.axis")
+            .transition()
+            .duration(1000)
+						.call(yAxis);
+				});
+		</script>
+	</body>
+</html>

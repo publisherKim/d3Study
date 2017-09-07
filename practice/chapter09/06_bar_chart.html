@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>트랜지션(애니메이션 효과)</title>
+    <title>동적으로 데이터가 바뀌는 효과</title>
     <script src="/d3/d3.v3.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/practice.css">
 </head>
 
 <body>
-    <button>원그래프로 바꾸기 단 한번</button>
+    <button>데이터 동적으로 변경하기</button>
     <script type="text/javascript">
 			const w = 600;
 			const h = 250;
@@ -72,27 +72,18 @@
       
       d3.select("button")
         .on("click", function(){
-          dataset = [11, 12, 15, 20, 18, 17, 16, 18, 23, 25, 5, 10, 13, 19, 21, 25, 22, 18, 15, 13];
-
-          // transition 함수를 만들어 놓았다. 움직임 ... 고급지다고 해야 하나 애니메이션 효과가 함수 한번 호출로 끝나는 점은 좋다.
-          // 평균 0.15초가 적당하다고 하는데 개인적으로는 약간은 느린게 좋다. 시간단위는 1/1000 초이다. default 1/1000
-          // ease 모션의 가속도를 결정한다. linear은 일정 속도
-          /*
-            ex: 
-              circle :  끝까지 가속하는 점진적이 이징
-              elastic : 한번 퉁 튕긴다.
-              bounce : 공처럼 튀기다 멈춘다.
-          */
-          // delay : 특별히 어떤 시점에 넣어야 하는건 아니지만 모션이 시작하기 전 순간에 넣는게 좋다.
-          // 콜백함수를 활용하면 시차 적으로 개별적으로 순차 모션을 주는것도 가능하다.
+          const maxNumber = 25;
+					let numValues = dataset.length;					
+					dataset = [];
+					for (var i = 0; i < numValues; i++) {				
+						let newNumber = Math.floor(Math.random() * maxNumber); 
+						dataset.push(newNumber);			 			
+					}
+          
           svg.selectAll("rect")
             .data(dataset)
             .transition()
             .delay(function(d, i){
-              // 0 / 20 * 1000 순차적으로 된다.
-              console.log(i, dataset.length * 1000, i / dataset.length * 1000);
-              // 즉 모든 동작이 2초 이내에 i의 개수만큼 delay가 더 생긴다.
-              // 총 시간을 정해놓고 데이터의 순서로 delay 시간을 조절한다.
               return i / dataset.length * 1000;
             })
             .duration(500)
@@ -104,7 +95,6 @@
               return yScale(d);
             })
             .attr("fill", function(d){
-              // d는 데이터의 수치 이므로 색상도 변화함, 데이터의 미묘한 차이를 색으로 표현하려고 하는 의도 
               return "rgb(0, 0, " + (d * 10) + ")";
             });
           
@@ -114,12 +104,9 @@
               return d;
             })
             .attr("x", function(d, i){
-              // rangeBand는 가로의 위치를 결정한다.
               return xScale(i) + xScale.rangeBand() / 2;              
             })
             .attr("y", function(d){
-              // 라벨의 세로 위치를 결정한다. 
-              // 비율로 결정되 d값을 가지고 높이를 배정한다.
               return h - yScale(d) + 14;
             }) 
         });
