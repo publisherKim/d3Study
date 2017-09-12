@@ -137,3 +137,35 @@ function 해결책(x) {
 }
 
 해결책(10);
+
+// 두 양수를 입력 받아 합을 구하세요.
+function sum(a, b) {
+  if( a <= 0 || b <= 0 || a !== parseInt(a) || b !== parseInt(b) ) {
+      throw new Error('양수만 입력 가능합니다.')         
+  }
+  return a + b;
+}
+sum(1, 2);
+sum(1, -1);
+sum(-1, 3);
+
+// selection sort
+const arr = [8,3,4,9,7];
+function selectionSort(items) {  
+    var length = items.length;
+    for (var i = 0; i < length - 1; i++) {
+        var min = i; 
+        for (var j = i + 1; j < length; j++) {
+            if (items[j] < items[min]) {
+                min = j;
+            }
+        }
+        if (min != i) {
+            var tmp = items[i];
+            items[i] = items[min];
+            items[min] = tmp;
+        }
+    }
+    return items;
+}
+selectionSort(arr);
